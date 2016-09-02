@@ -56,18 +56,5 @@ void B2EventAction::BeginOfEventAction(const G4Event*) {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B2EventAction::EndOfEventAction(const G4Event* event) {
-/*
-  G4AnalysisManager* aman = G4AnalysisManager::Instance();
-  for (int i = 0; i < 2000; i++) {
-    aman->FillNtupleDColumn(0, i, aman->GetH1(0)->bin_height(i));
-  }
-  aman->AddNtupleRow(0);
-  aman->GetH1(0)->reset();
 
-  for (int i = 0; i < 2000; i++) {
-    aman->FillNtupleDColumn(1, i, aman->GetH1(1)->bin_height(i));
-  }
-  aman->AddNtupleRow(1);
-  aman->GetH1(1)->reset();
-*/
 }

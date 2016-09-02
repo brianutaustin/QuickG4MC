@@ -24,7 +24,6 @@ endif()
 #
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(/home/dphan/ROOT-system/root-5.34.34/include)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -32,7 +31,6 @@ include_directories(/home/dphan/ROOT-system/root-5.34.34/include)
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
-file(GLOB headers /home/dphan/ROOT-system/root-5.34.34/include/*.h)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries

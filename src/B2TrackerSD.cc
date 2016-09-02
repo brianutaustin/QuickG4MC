@@ -25,8 +25,8 @@
 //
 // $Id: B2TrackerSD.cc 87359 2014-12-01 16:04:27Z gcosmo $
 //
-/// \file B2TrackerSD.cc
-/// \brief Implementation of the B2TrackerSD class
+// / \file B2TrackerSD.cc
+// / \brief Implementation of the B2TrackerSD class
 
 #include "B2TrackerSD.hh"
 #include "G4HCofThisEvent.hh"
@@ -38,26 +38,18 @@
 
 #include "B2Analysis.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 B2TrackerSD::B2TrackerSD(const G4String& name,
                          const G4String& hitsCollectionName)
- : G4VSensitiveDetector(name),
-   fHitsCollection(NULL)
-  //fout("OutputFile.txt",std::fstream::out|std::fstream::trunc)
-{
+  : G4VSensitiveDetector(name),
+  fHitsCollection(NULL) {
+  // fout("OutputFile.txt",std::fstream::out|std::fstream::trunc)
   collectionName.insert(hitsCollectionName);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+B2TrackerSD::~B2TrackerSD() {
+}
 
-B2TrackerSD::~B2TrackerSD()
-{}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void B2TrackerSD::Initialize(G4HCofThisEvent* hce)
-{
+void B2TrackerSD::Initialize(G4HCofThisEvent * hce) {
   // Create hits collection
 
   fHitsCollection
@@ -65,41 +57,32 @@ void B2TrackerSD::Initialize(G4HCofThisEvent* hce)
 
   // Add this collection in hce
 
-    neutron_num=0;
-    gamma_num=0;
+  neutron_num = 0;
+  gamma_num = 0;
 
   G4int hcID
     = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
-  hce->AddHitsCollection( hcID, fHitsCollection );
+  hce->AddHitsCollection(hcID, fHitsCollection);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+// Tracking Particle
+G4bool B2TrackerSD::ProcessHits(G4Step * aStep, G4TouchableHistory *) {
+  G4AnalysisManager * aman = G4AnalysisManager::Instance();
+  auto particle_def = aStep->GetTrack()->GetParticleDefinition();
 
-//Tracking Particle
-G4bool B2TrackerSD::ProcessHits(G4Step* aStep,
-                                     G4TouchableHistory*)
-{
-    G4AnalysisManager* aman = G4AnalysisManager::Instance();
-    auto particle_def = aStep->GetTrack()->GetParticleDefinition();
-    //G4cout<<particle_def->GetPDGEncoding()<<"|"<<aStep->IsFirstStepInVolume()<<G4endl;
-    if (particle_def->GetPDGEncoding()== 2112 && aStep->IsFirstStepInVolume()){
-    	aman->FillH1(0, aStep->GetTrack()->GetKineticEnergy());
-	  return true;
-    }
-    if (particle_def->GetPDGEncoding()== 22 && aStep->IsFirstStepInVolume()){
-    	aman->FillH1(1, aStep->GetTrack()->GetKineticEnergy());
-	  return true;
-    }
-
-    //neutron
-
+  if (particle_def->GetPDGEncoding() == 2112 && aStep->IsFirstStepInVolume()) {
+    aman->FillH1(0, aStep->GetTrack()->GetKineticEnergy());
+    return true;
+  }
+  if (particle_def->GetPDGEncoding() == 22 && aStep->IsFirstStepInVolume()) {
+    aman->FillH1(1, aStep->GetTrack()->GetKineticEnergy());
+    return true;
+  }
 
   return false;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B2TrackerSD::EndOfEvent(G4HCofThisEvent*) {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void B2TrackerSD::EndOfEvent(G4HCofThisEvent *) {
+}

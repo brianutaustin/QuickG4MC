@@ -95,12 +95,12 @@ void B2RunAction::EndOfRunAction(const G4Run* ) {
   G4AnalysisManager* aman = G4AnalysisManager::Instance();
 
   for (int i = 0; i < 2000; i++) {
-    aman->FillNtupleDColumn(0, i, double(aman->GetH1(0)->bin_height(i)/1000));
+    aman->FillNtupleDColumn(0, i, double(aman->GetH1(0)->bin_height(i)/100));
   }
   aman->AddNtupleRow(0);
 
   for (int i = 0; i < 2000; i++) {
-    aman->FillNtupleDColumn(1, i, double(aman->GetH1(1)->bin_height(i)/1000));
+    aman->FillNtupleDColumn(1, i, double(aman->GetH1(1)->bin_height(i)/100));
   }
   aman->AddNtupleRow(1);
 
